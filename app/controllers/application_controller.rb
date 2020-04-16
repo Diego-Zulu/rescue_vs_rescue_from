@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  rescue_from CustomError do |_exception|
+    head :forbidden
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     head :not_found
   end
@@ -8,6 +12,6 @@ class ApplicationController < ActionController::API
   def action
     raise ActiveRecord::RecordNotFound
   rescue ActiveRecord::RecordNotFound
-    raise CustomError.new(no_cause: true), 'My message'
+    raise CustomError
   end
 end
