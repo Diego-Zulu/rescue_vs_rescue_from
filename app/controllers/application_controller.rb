@@ -8,6 +8,6 @@ class ApplicationController < ActionController::API
   def action
     raise ActiveRecord::RecordNotFound
   rescue ActiveRecord::RecordNotFound
-    raise CustomError
+    raise CustomError.new(no_cause: true), 'My message'
   end
 end
